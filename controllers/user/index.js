@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import user from "../../models/user";
 import User from "../../models/user";
+import asyncHandler from "express-async-handler";
 
-export const registerUser = async (req, res) => {
+export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   // Check if the fields are not empty
@@ -45,7 +45,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
-export const loginUser = async (req, res) => {
+export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   // Check if the fields are missing
@@ -70,7 +70,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
-export const getUser = async (req, res) => {
+export const getUser = asyncHandler(async (req, res) => {
   const { _id, name, email } = await User.findOne(req.user.id);
   res.status(200).json({
     id: _id,
