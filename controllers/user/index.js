@@ -44,6 +44,31 @@ export const registerUser = async (req, res) => {
   }
 };
 
+export const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  // Check if the fields are missing
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("Please insert all the fields.");
+  }
+
+  // Find the user
+  const user = await User.findOne({ email });
+  // Check if the user exists and his credentials
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("User not found or invalid credentials.");
+  }
+};
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
