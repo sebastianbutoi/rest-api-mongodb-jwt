@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import user from "../../models/user";
 import User from "../../models/user";
 
 export const registerUser = async (req, res) => {
@@ -67,6 +68,15 @@ export const loginUser = async (req, res) => {
     res.status(400);
     throw new Error("User not found or invalid credentials.");
   }
+};
+
+export const getUser = async (req, res) => {
+  const { _id, name, email } = await User.findOne(req.user.id);
+  res.status(200).json({
+    id: _id,
+    name,
+    email,
+  });
 };
 
 const generateToken = (id) => {
