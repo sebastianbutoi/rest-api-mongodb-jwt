@@ -1,4 +1,5 @@
-import bcrypt from "bcryptjs/dist/bcrypt";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import User from "../../models/user";
 
 export const registerUser = async (req, res) => {
@@ -41,4 +42,10 @@ export const registerUser = async (req, res) => {
     res.status(400);
     throw new Error("Error: can't create user.");
   }
+};
+
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
 };
