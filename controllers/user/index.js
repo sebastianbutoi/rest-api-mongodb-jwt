@@ -3,6 +3,9 @@ import jwt from "jsonwebtoken";
 import User from "../../models/user";
 import asyncHandler from "express-async-handler";
 
+// @desc    Register new user
+// @route   POST /api/users
+// @access  Public
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -43,8 +46,11 @@ export const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Error: can't create user.");
   }
-};
+});
 
+// @desc    Authenticate user
+// @route   POST /api/users/login
+// @access  Public
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -68,8 +74,11 @@ export const loginUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("User not found or invalid credentials.");
   }
-};
+});
 
+// @desc    Get user data
+// @route   GET /api/users/me
+// @access  Private
 export const getUser = asyncHandler(async (req, res) => {
   const { _id, name, email } = await User.findOne(req.user.id);
   res.status(200).json({
@@ -77,8 +86,9 @@ export const getUser = asyncHandler(async (req, res) => {
     name,
     email,
   });
-};
+});
 
+// Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
