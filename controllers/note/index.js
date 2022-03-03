@@ -2,6 +2,9 @@ import asyncHandler from "express-async-handler";
 import Note from "../../models/note";
 import User from "../../models/user";
 
+// @desc    Get notes
+// @route   GET /api/notes
+// @access  Private
 export const getNotes = asyncHandler(async (req, res) => {
   const notes = await Note.find({ user: req.user.id });
   res.status(200).json({
@@ -10,6 +13,9 @@ export const getNotes = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Set note
+// @route   POST /api/notes
+// @access  Private
 export const setNote = asyncHandler(async (req, res) => {
   if (!req.body.text) {
     res.status(400);
@@ -27,6 +33,9 @@ export const setNote = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Update note
+// @route   PUT /api/notes/:id
+// @access  Private
 export const updateNote = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const note = await Note.findById(id);
@@ -55,6 +64,9 @@ export const updateNote = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Delete note
+// @route   DELETE /api/notes/:id
+// @access  Private
 export const deleteNote = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const note = await Note.findById(id);
