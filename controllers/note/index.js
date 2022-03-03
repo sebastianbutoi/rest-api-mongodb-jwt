@@ -10,7 +10,20 @@ export const getNotes = asyncHandler(async (req, res) => {
 });
 
 export const setNote = asyncHandler(async (req, res) => {
-  //
+  if (!req.body.text) {
+    res.status(400);
+    throw new Error("Please add a text field");
+  }
+
+  const newNote = await Note.create({
+    text: req.body.text,
+    user: req.user.id,
+  });
+
+  res.status(201).json({
+    status: "success",
+    payload: newNote,
+  });
 });
 
 export const updateNote = asyncHandler(async (req, res) => {
