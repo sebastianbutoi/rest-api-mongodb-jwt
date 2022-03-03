@@ -4,8 +4,10 @@ import dotenv from "dotenv";
 import notesRouter from "./routes/note/index.js";
 import userRouter from "./routes/user/index.js";
 import { errorHandler } from "./middleware/error";
+import { connectDB } from "./config/db.js";
 
 dotenv.config();
+connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
