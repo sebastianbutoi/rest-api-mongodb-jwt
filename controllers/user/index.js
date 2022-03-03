@@ -80,7 +80,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users/me
 // @access  Private
 export const getUser = asyncHandler(async (req, res) => {
-  const { _id, name, email } = await User.findOne(req.user.id);
+  const { _id, name, email } = await User.findOne({ _id: req.user.id });
   res.status(200).json({
     id: _id,
     name,
