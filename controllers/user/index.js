@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../../models/user";
+import User from "../../models/user/index.js";
 import asyncHandler from "express-async-handler";
 
 // @desc    Register new user

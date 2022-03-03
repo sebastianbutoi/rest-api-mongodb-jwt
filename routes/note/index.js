@@ -4,8 +4,8 @@ import {
   getNotes,
   setNote,
   updateNote,
-} from "../../controllers/note";
-import { checkToken } from "../../middleware/auth";
+} from "../../controllers/note/index.js";
+import { checkToken } from "../../middleware/auth/index.js";
 
 const router = express.Router();
 
