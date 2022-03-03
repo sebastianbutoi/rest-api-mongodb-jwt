@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import User from "../../models/user";
+import asyncHandler from "express-async-handler";
 
-export const checkToken = async (req, res, next) => {
+export const checkToken = asyncHandler(async (req, res, next) => {
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -19,4 +20,4 @@ export const checkToken = async (req, res, next) => {
     res.status(401);
     throw new Error("Token is missing.");
   }
-};
+});
